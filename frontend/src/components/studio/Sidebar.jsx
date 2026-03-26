@@ -1,20 +1,24 @@
 import { useRef, useState } from "react";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 
-const FILTER_CONFIG = {
-  function_type: {
-    label: "Function",
-    options: ["Haldi", "Mehndi", "Sangeet", "Shadi", "Reception"],
-  },
-  theme: {
-    label: "Theme",
-    options: ["Traditional", "Modern", "Mix"],
-  },
-  space: {
-    label: "Space",
-    options: ["Restaurant", "Bar", "Stage", "Hall", "Lounge"],
-  },
-};
+const SPACE_OPTIONS = [
+  { name: "Grand Ballroom", type: "BALLROOM", capacity: "500 guests" },
+  { name: "Emerald Lawn", type: "LAWN", capacity: "800 guests" },
+  { name: "Imperial Banquet Hall", type: "BANQUET", capacity: "200 guests" },
+  { name: "Marble Foyer", type: "FOYER", capacity: "150 guests" },
+  { name: "Sky Terrace", type: "ROOFTOP", capacity: "300 guests" },
+  { name: "Courtyard Garden", type: "COURTYARD", capacity: "100 guests" },
+];
+
+const EVENT_OPTIONS = [
+  { name: "Ultra-Luxury Wedding", desc: "Opulent destination wedding with international luxury standards" },
+  { name: "Indian Destination Wedding", desc: "Grand Indian wedding with traditional elements and modern luxury" },
+  { name: "Corporate Conference", desc: "Professional business event with modern staging and technology" },
+  { name: "Global Exhibition", desc: "International trade show or product showcase" },
+  { name: "Fashion Show", desc: "High-fashion runway event with dramatic staging" },
+  { name: "Product Launch", desc: "Premium brand product unveiling event" },
+  { name: "Cultural Festival", desc: "Vibrant cultural celebration with diverse elements" },
+];
 
 export default function Sidebar({ filters, setFilters, referenceImage, setReferenceImage }) {
   const fileInputRef = useRef(null);
@@ -113,34 +117,73 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
       </div>
 
       {/* Separator */}
-      <div className="border-t border-white/10 mb-6" />
+      <div className="border-t border-white/10 mb-5" />
 
-      {/* Filter Groups */}
-      {Object.entries(FILTER_CONFIG).map(([key, config]) => (
-        <div key={key} className="mb-5">
-          <h3
-            className="text-white/80 text-xs uppercase tracking-widest mb-3"
-            style={{ fontFamily: "var(--font-body)", fontWeight: 500 }}
-          >
-            {config.label}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {config.options.map((option) => (
-              <button
-                key={option}
-                onClick={() => toggleFilter(key, option)}
-                className={`rounded-full px-4 py-1.5 text-xs tracking-wide transition-all duration-300 ${
-                  filters[key] === option ? "glass-pill-active" : "glass-pill"
-                }`}
-                style={{ fontFamily: "var(--font-body)", fontWeight: 400 }}
-                data-testid={`filter-${key}-${option.toLowerCase()}`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
+      {/* Select Space */}
+      <div className="mb-5">
+        <h3
+          className="text-white/90 text-sm mb-1"
+          style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+        >
+          Select Space
+        </h3>
+        <p className="text-white/40 text-xs mb-3" style={{ fontFamily: "var(--font-body)" }}>
+          Choose a Fairmont Mumbai venue
+        </p>
+        <div className="flex flex-col gap-2">
+          {SPACE_OPTIONS.map((space) => (
+            <button
+              key={space.name}
+              onClick={() => toggleFilter("space", space.name)}
+              className={`text-left rounded-xl px-4 py-3 transition-all duration-300 ${
+                filters.space === space.name
+                  ? "glass-pill-active border-white/40"
+                  : "glass-pill"
+              }`}
+              style={{ fontFamily: "var(--font-body)" }}
+              data-testid={`filter-space-${space.type.toLowerCase()}`}
+            >
+              <span className="block text-xs font-medium text-white/90">{space.name}</span>
+              <span className="block text-[10px] uppercase tracking-wider text-white/40 mt-0.5">{space.type}</span>
+              <span className="block text-[10px] text-white/30 mt-0.5">Capacity: {space.capacity}</span>
+            </button>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* Separator */}
+      <div className="border-t border-white/10 mb-5" />
+
+      {/* Event Type */}
+      <div className="mb-5">
+        <h3
+          className="text-white/90 text-sm mb-1"
+          style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+        >
+          Event Type
+        </h3>
+        <p className="text-white/40 text-xs mb-3" style={{ fontFamily: "var(--font-body)" }}>
+          Choose your occasion
+        </p>
+        <div className="flex flex-col gap-2">
+          {EVENT_OPTIONS.map((event) => (
+            <button
+              key={event.name}
+              onClick={() => toggleFilter("function_type", event.name)}
+              className={`text-left rounded-xl px-4 py-3 transition-all duration-300 ${
+                filters.function_type === event.name
+                  ? "glass-pill-active border-white/40"
+                  : "glass-pill"
+              }`}
+              style={{ fontFamily: "var(--font-body)" }}
+              data-testid={`filter-event-${event.name.toLowerCase().replace(/\s+/g, "-")}`}
+            >
+              <span className="block text-xs font-medium text-white/90">{event.name}</span>
+              <span className="block text-[10px] text-white/35 mt-0.5 leading-relaxed">{event.desc}</span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Spacer */}
       <div className="flex-1" />

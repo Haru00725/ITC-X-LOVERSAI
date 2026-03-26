@@ -59,13 +59,11 @@ class DownloadRequest(BaseModel):
 def build_prompt(req: GenerateRequest) -> str:
     parts = [req.prompt]
     if req.function_type:
-        parts.append(f"This is for a {req.function_type} ceremony")
-    if req.theme:
-        parts.append(f"Style: {req.theme}")
+        parts.append(f"Event type: {req.function_type}")
     if req.space:
-        parts.append(f"Venue type: {req.space}")
+        parts.append(f"Venue space: {req.space} at Fairmont Mumbai")
     base = ". ".join(parts)
-    return f"Generate a photorealistic, ultra-luxury Indian wedding venue design. {base}. The design should be elegant, grand, and feature beautiful lighting, floral arrangements, and premium decor. High quality architectural visualization, 4K detail."
+    return f"Generate a photorealistic, ultra-luxury event venue design at Fairmont Mumbai. {base}. The design should be elegant, grand, and feature beautiful lighting, floral arrangements, and premium decor. High quality architectural visualization, 4K detail."
 
 @api_router.get("/")
 async def root():

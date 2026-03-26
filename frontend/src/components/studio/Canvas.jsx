@@ -87,16 +87,13 @@ export default function Canvas({ filters, referenceImage, sessionId, onAddToMood
       </div>
 
       {/* Active filters display */}
-      {(filters.function_type || filters.theme || filters.space) && (
+      {(filters.function_type || filters.space) && (
         <div className="flex items-center gap-2 flex-wrap px-1">
           <span className="text-white/40 text-xs" style={{ fontFamily: "var(--font-body)" }}>
             Active:
           </span>
           {filters.function_type && (
             <span className="glass-pill-active rounded-full px-3 py-1 text-xs">{filters.function_type}</span>
-          )}
-          {filters.theme && (
-            <span className="glass-pill-active rounded-full px-3 py-1 text-xs">{filters.theme}</span>
           )}
           {filters.space && (
             <span className="glass-pill-active rounded-full px-3 py-1 text-xs">{filters.space}</span>

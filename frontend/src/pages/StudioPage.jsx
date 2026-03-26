@@ -13,7 +13,6 @@ export default function StudioPage() {
   const [showMoodboard, setShowMoodboard] = useState(false);
   const [filters, setFilters] = useState({
     function_type: null,
-    theme: null,
     space: null,
   });
   const [referenceImage, setReferenceImage] = useState(null);
@@ -88,9 +87,9 @@ export default function StudioPage() {
       </div>
 
       {/* Main Layout */}
-      <div className="relative z-10 h-[calc(100vh-56px)] grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:p-6 pt-0 md:pt-0">
+      <div className="relative z-10 h-[calc(100vh-56px)] grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:p-6 pt-0 md:pt-0" style={{ gridTemplateRows: "1fr" }}>
         {/* Sidebar */}
-        <div className="col-span-1 md:col-span-3 h-full">
+        <div className="col-span-1 md:col-span-3 min-h-0 h-full overflow-hidden">
           <Sidebar
             filters={filters}
             setFilters={setFilters}
@@ -102,7 +101,7 @@ export default function StudioPage() {
         </div>
 
         {/* Main Canvas */}
-        <div className="col-span-1 md:col-span-9 h-full">
+        <div className="col-span-1 md:col-span-9 min-h-0 h-full">
           <Canvas
             filters={filters}
             referenceImage={referenceImage}
