@@ -226,6 +226,38 @@ async def download_ppt(req: DownloadRequest):
         headers={"Content-Disposition": "attachment; filename=moodboard.pptx"}
     )
 
+import json
+
+# Templates endpoints
+TEMPLATES_DIR = ROOT_DIR / "data" / "templates"
+TEMPLATES_CONFIG = ROOT_DIR / "data" / "templates.json"
+
+@api_router.get("/templates")
+async def list_templates():
+    try:
+        if TEMPLATES_CONFIG.exists():
+            with open(TEMPLATES_CONFIG, "r") as f:
+                templates = json.load(f)
+            # Check which files actually exist
+            for t in templates:
+                t["available"] = (TEMPLATES_DIR / t["filename"]).exists()
+            return {"templates": templates}
+        return {"templates": []}
+    except Exception as e:
+        logger.error(f"Templates error: {e}")
+        return {"templates": []}
+
+@api_router.get("/templates/download/{filename}")
+async def download_template(filename: str):
+    filepath = TEMPLATES_DIR / filename
+    if not filepath.exists():
+        return {"error": "Template file not found"}
+    return StreamingResponse(
+        open(filepath, "rb"),
+        media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
 app.include_router(api_router)
 
 app.add_middleware(

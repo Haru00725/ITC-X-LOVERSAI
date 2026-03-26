@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { Sparkles, Plus, Loader2, ImageIcon } from "lucide-react";
+import { Sparkles, Download, Loader2, ImageIcon } from "lucide-react";
 import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-export default function Canvas({ filters, referenceImage, sessionId, onAddToMoodboard }) {
+export default function Canvas({ filters, referenceImage, sessionId }) {
   const [prompt, setPrompt] = useState("");
   const [generatedImage, setGeneratedImage] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState(null);
-  const [lastPrompt, setLastPrompt] = useState("");
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
@@ -21,7 +20,6 @@ export default function Canvas({ filters, referenceImage, sessionId, onAddToMood
       const payload = {
         prompt: prompt.trim(),
         function_type: filters.function_type || null,
-        theme: filters.theme || null,
         space: filters.space || null,
         reference_image: referenceImage?.data || null,
       };
@@ -30,7 +28,6 @@ export default function Canvas({ filters, referenceImage, sessionId, onAddToMood
 
       if (res.data.success) {
         setGeneratedImage(res.data.image_data);
-        setLastPrompt(prompt);
       } else {
         setError(res.data.error || "Failed to generate image");
       }
@@ -41,12 +38,14 @@ export default function Canvas({ filters, referenceImage, sessionId, onAddToMood
     }
   };
 
-  const handleAddToMoodboard = () => {
-    if (generatedImage) {
-      onAddToMoodboard(generatedImage, lastPrompt);
-      setGeneratedImage(null);
-      setPrompt("");
-    }
+  const handleDownload = () => {
+    if (!generatedImage) return;
+    const link = document.createElement("a");
+    link.href = `data:image/png;base64,${generatedImage}`;
+    link.download = `design-${Date.now()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleKeyDown = (e) => {
@@ -136,13 +135,13 @@ export default function Canvas({ filters, referenceImage, sessionId, onAddToMood
             />
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
               <button
-                onClick={handleAddToMoodboard}
+                onClick={handleDownload}
                 className="glass-button rounded-full px-6 py-3 flex items-center gap-2 text-sm uppercase tracking-wider"
                 style={{ fontFamily: "var(--font-body)", fontWeight: 400 }}
-                data-testid="add-to-moodboard"
+                data-testid="download-image"
               >
-                <Plus className="w-4 h-4" strokeWidth={1.5} />
-                Add to Moodboard
+                <Download className="w-4 h-4" strokeWidth={1.5} />
+                Download
               </button>
             </div>
           </>

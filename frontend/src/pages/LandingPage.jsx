@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Instagram, Linkedin, Mail, ArrowDown, Sparkles } from "lucide-react";
 
-const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/0opwejfb_image.png";
+const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/prqxmpyt_b354_ho_00_p_1024x768.jpg";
 const LOGO_SVG = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/jct1j2ir_msa_l_0000681.svg";
 
 export default function LandingPage() {
@@ -102,15 +102,15 @@ export default function LandingPage() {
               breathtaking moodboards for your most important celebrations.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              {["AI-Powered Design", "Moodboard Creation", "Export to PDF & PPT"].map((tag) => (
-                <span
-                  key={tag}
-                  className="glass-pill rounded-full px-5 py-2 text-xs tracking-wider uppercase"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  {tag}
-                </span>
-              ))}
+              <button
+                onClick={() => navigate("/templates")}
+                className="glass-button rounded-full px-6 py-2.5 text-xs tracking-wider uppercase flex items-center gap-2"
+                style={{ fontFamily: "var(--font-body)" }}
+                data-testid="ai-powered-design-btn"
+              >
+                <Sparkles className="w-4 h-4" strokeWidth={1.5} />
+                AI-Powered Design
+              </button>
             </div>
           </div>
         </section>

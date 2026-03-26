@@ -1,0 +1,30 @@
+[
+  {
+    "id": "template-001",
+    "title": "Ultra-Luxury Wedding",
+    "description": "Opulent destination wedding setup with international luxury standards",
+    "category": "Wedding",
+    "filename": "ultra-luxury-wedding.pptx"
+  },
+  {
+    "id": "template-002",
+    "title": "Indian Destination Wedding",
+    "description": "Grand Indian wedding with traditional elements and modern luxury",
+    "category": "Wedding",
+    "filename": "indian-destination-wedding.pptx"
+  },
+  {
+    "id": "template-003",
+    "title": "Corporate Conference",
+    "description": "Professional business event with modern staging and technology",
+    "category": "Corporate",
+    "filename": "corporate-conference.pptx"
+  },
+  {
+    "id": "template-004",
+    "title": "Fashion Show",
+    "description": "High-fashion runway event with dramatic staging",
+    "category": "Fashion",
+    "filename": "fashion-show.pptx"
+  }
+]
