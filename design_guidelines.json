@@ -1,0 +1,151 @@
+{
+  "theme_and_archetype": {
+    "domain": "Ultra-Luxury Event & AI Design Studio",
+    "theme": "DARK",
+    "archetype": "5 (Jewel & Luxury)",
+    "rationale": "Cinematic, moody, and highly expensive feel using strict optical clarity glassmorphism to let the background imagery breathe without competing elements. No solid colors; reliance strictly on light, shadow, and blur."
+  },
+  "typography": {
+    "headings": {
+      "family": "Cormorant Garamond, serif",
+      "weights": ["400", "600"],
+      "usage_rules": "Use for primary display text, hero headlines, and elegant section titles. Never use generic sans-serif for headings."
+    },
+    "body": {
+      "family": "Manrope, sans-serif",
+      "weights": ["300", "400", "500"],
+      "usage_rules": "Use for all UI elements, buttons, prompts, sidebar toggles, and descriptions to ensure sterile, modern legibility contrasting the serif headers."
+    }
+  },
+  "colors": {
+    "backgrounds": {
+      "glass_base": "bg-white/5",
+      "glass_heavy": "bg-black/40",
+      "glass_hover": "hover:bg-white/10"
+    },
+    "borders": {
+      "glass_edge": "border-white/20",
+      "glass_edge_hover": "hover:border-white/40"
+    },
+    "text": {
+      "primary": "text-white",
+      "secondary": "text-white/70",
+      "accent_glow": "text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+    },
+    "forbidden": [
+      "Solid gold",
+      "Flat opaque colors",
+      "Teal",
+      "Purple gradients",
+      "Solid primary buttons"
+    ]
+  },
+  "glassmorphism_system": {
+    "panel": "backdrop-blur-xl bg-white/5 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.25)] rounded-2xl",
+    "button_default": "backdrop-blur-md bg-white/10 border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.1)] rounded-full text-white transition-all duration-300",
+    "button_hover": "hover:bg-white/20 hover:backdrop-blur-xl hover:border-white/40 hover:shadow-[0_8px_24px_rgba(255,255,255,0.15)] hover:-translate-y-0.5",
+    "input_bar": "backdrop-blur-lg bg-white/10 border border-white/20 shadow-inner rounded-full text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/15",
+    "modal_overlay": "backdrop-blur-2xl bg-black/60 fixed inset-0 z-50 flex items-center justify-center",
+    "toggle_pill_active": "backdrop-blur-xl bg-white/20 border border-white/40 text-white",
+    "toggle_pill_inactive": "backdrop-blur-md bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+  },
+  "layout_and_spacing": {
+    "landing_page": {
+      "background_treatment": "Fixed full-screen Fairmont image with slight dark gradient overlay (bg-black/30) to ensure text legibility.",
+      "hero_section": "Center-aligned flexbox. Massive spacing (py-32). Headline pairs Fairmont logo inline with 'x LoversAI' text.",
+      "about_section": "Wide central glass card (max-w-4xl mx-auto) with generous padding (p-12).",
+      "footer": "Sleek bottom glass bar (backdrop-blur-xl bg-white/5 border-t border-white/20 py-8)."
+    },
+    "studio_page": {
+      "background_treatment": "Same Fairmont background but with heavy blur overlay (backdrop-blur-3xl bg-black/50) to prevent distraction from generated images.",
+      "grid": "h-screen w-full grid grid-cols-1 md:grid-cols-12 gap-6 p-6 overflow-hidden.",
+      "sidebar": "col-span-12 md:col-span-3 h-full flex flex-col gap-6 overflow-y-auto custom-scrollbar. Strict glassmorphism panels.",
+      "main_canvas": "col-span-12 md:col-span-9 h-full flex flex-col gap-6 relative."
+    }
+  },
+  "components": {
+    "hero_headline": {
+      "structure": "Flex row, items center, justify center, gap-4 flex-wrap.",
+      "elements": "<img> Fairmont Logo (h-16 or h-20) + <span> 'x LoversAI' (Cormorant Garamond, text-5xl md:text-6xl+, text-white).",
+      "data_testid": "hero-headline"
+    },
+    "cta_button": {
+      "text": "Design Your Vision",
+      "style": "glass_button massive (px-10 py-4 text-xl tracking-wide uppercase).",
+      "data_testid": "design-vision-cta"
+    },
+    "sidebar_upload": {
+      "style": "Glassmorphism drop-zone. border-dashed border-2 border-white/30 bg-white/5 hover:bg-white/10 transition-all rounded-xl p-8 text-center flex flex-col items-center justify-center gap-2 text-white/80 cursor-pointer.",
+      "text": "Upload Design Reference",
+      "data_testid": "upload-design-reference"
+    },
+    "sidebar_filters": {
+      "structure": "Groups for Functions, Theme, Space.",
+      "elements": "Pill-shaped glass toggles flex-wrap gap-2.",
+      "data_testids": "filter-[category]-[option]"
+    },
+    "prompt_bar": {
+      "structure": "Relative container w-full max-w-4xl mx-auto flex items-center.",
+      "input": "glass_input_bar w-full pl-6 pr-32 py-4 text-lg.",
+      "button": "Absolute right-2 glass_button px-6 py-2 text-sm uppercase tracking-wider.",
+      "data_testids": {
+        "input": "prompt-input",
+        "button": "generate-button"
+      }
+    },
+    "canvas_display": {
+      "structure": "Flex-1 w-full rounded-2xl overflow-hidden glassmorphism panel flex items-center justify-center relative.",
+      "action": "Once image loads, show absolute bottom-6 center 'Add to Moodboard' glass button.",
+      "data_testids": {
+        "canvas": "main-canvas",
+        "add_button": "add-to-moodboard"
+      }
+    },
+    "moodboard_modal": {
+      "trigger": "'View Moodboard' button in sidebar (bottom locked).",
+      "overlay": "glass_modal_overlay.",
+      "content": "Large glass panel (max-w-6xl w-full max-h-[90vh] p-8 flex flex-col gap-6 overflow-hidden).",
+      "grid": "Stylish masonry or bento grid for saved images (overflow-y-auto).",
+      "actions": "Flex gap-4 justify-end -> 'Download PDF', 'Download PPT' (both glass buttons).",
+      "data_testids": {
+        "trigger": "view-moodboard",
+        "modal": "moodboard-modal",
+        "download_pdf": "download-pdf",
+        "download_ppt": "download-ppt"
+      }
+    }
+  },
+  "media": {
+    "background_fairmont": {
+      "url": "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/0opwejfb_image.png",
+      "usage": "Full-screen fixed background for Landing (light overlay) and Studio (heavy blur overlay)."
+    },
+    "logo_fairmont": {
+      "url": "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/jct1j2ir_msa_l_0000681.svg",
+      "usage": "Landing page hero headline and header/nav logo."
+    },
+    "font_reference": {
+      "url": "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/9wo8kwvl_281db6a821cd2989463cc0de7fbbadaf.jpg",
+      "usage": "Informs the choice of Cormorant Garamond + Manrope."
+    },
+    "generated_placeholders": {
+      "haldi": "https://static.prod-images.emergentagent.com/jobs/b0f435a9-fb35-4675-ab58-f27002ed4eab/images/b42f4db7849f4f65e3b7d172722125d0d35935bb674430609b89820b6d3480fc.png",
+      "reception": "https://static.prod-images.emergentagent.com/jobs/b0f435a9-fb35-4675-ab58-f27002ed4eab/images/3c7cd287aef4e34243a34855926b57b3c6b20bb2063c43baa8129722bdb450e2.png",
+      "usage": "Use these to populate the moodboard grid and show a 'generated' state in the main canvas."
+    }
+  },
+  "testing": {
+    "rules": "All interactive elements MUST include a data-testid attribute in kebab-case representing their role."
+  },
+  "instructions_to_main_agent": [
+    "Build the application using pure React (.js/.jsx) with Tailwind CSS.",
+    "Do NOT use solid colors for any cards, backgrounds, or buttons. Rely entirely on the defined glassmorphism classes (backdrop-blur, bg-white/10, border-white/20).",
+    "Install Google Fonts 'Cormorant Garamond' and 'Manrope'. Ensure Cormorant is used for headings and Manrope for body text.",
+    "The Landing Page background must be fully visible with only a slight black gradient to ensure text contrast.",
+    "The Studio Page background must use the same image but with a heavy backdrop-blur (e.g., backdrop-blur-3xl) so the user interface and generated images pop.",
+    "Ensure 'Add to Moodboard' clears the main canvas and moves the image to a global state/context for the Moodboard Modal.",
+    "Implement the Moodboard Modal with a responsive grid layout displaying the generated images.",
+    "Ensure all Lucide/Phosphor icons used have matching stroke widths to the elegant typography (stroke-1 or stroke-1.5).",
+    "DO NOT use generic Shadcn opaque cards. If using Shadcn components (like dialogs or selects), you MUST override their background and border utility classes to match the strict glassmorphism style."
+  ]
+}
