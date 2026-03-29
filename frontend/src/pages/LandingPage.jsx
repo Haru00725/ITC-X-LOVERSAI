@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { Instagram, Linkedin, Mail, ArrowDown, Sparkles } from "lucide-react";
 
 const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/prqxmpyt_b354_ho_00_p_1024x768.jpg";
-const LOGO_SVG = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/jct1j2ir_msa_l_0000681.svg";
+const FAIRMONT_LOGO = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/vull8s52_msa_l_0000681-1.svg";
+const LOVERSAI_LOGO = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/pzzxqiqb_Gemini_Generated_Image_vf8wwvvf8wwvvf8w-removebg-preview.png";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -28,21 +29,29 @@ export default function LandingPage() {
         <section className="min-h-screen flex flex-col items-center justify-center px-6">
           <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
             <div
-              className="flex items-center justify-center gap-4 flex-wrap mb-8"
+              className="flex items-center justify-center gap-5 md:gap-8 mb-10"
               data-testid="hero-headline"
             >
               <img
-                src={LOGO_SVG}
+                src={FAIRMONT_LOGO}
                 alt="Fairmont"
-                className="h-14 sm:h-16 md:h-20 brightness-0 invert drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto max-w-[200px] md:max-w-[280px] brightness-0 invert drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]"
+                style={{ objectFit: "contain" }}
                 data-testid="fairmont-logo"
               />
               <span
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wide"
-                style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+                className="text-3xl sm:text-4xl md:text-5xl text-white/50"
+                style={{ fontFamily: "var(--font-heading)", fontWeight: 300 }}
               >
-                <span className="text-white/60 mx-2">x</span> LoversAI
+                X
               </span>
+              <img
+                src={LOVERSAI_LOGO}
+                alt="LoversAI"
+                className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto max-w-[200px] md:max-w-[280px] brightness-0 invert drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]"
+                style={{ objectFit: "contain" }}
+                data-testid="loversai-logo"
+              />
             </div>
           </div>
 
@@ -122,7 +131,7 @@ export default function LandingPage() {
         >
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <img src={LOGO_SVG} alt="Fairmont" className="h-8 brightness-0 invert opacity-60" />
+              <img src={FAIRMONT_LOGO} alt="Fairmont" className="h-6 brightness-0 invert opacity-60" />
               <span
                 className="text-white/60 text-sm"
                 style={{ fontFamily: "var(--font-heading)" }}

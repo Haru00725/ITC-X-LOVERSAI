@@ -1,26 +1,102 @@
 import { useRef, useState } from "react";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 
+// Placeholder thumbnails — replace these URLs with actual venue/event images
 const SPACE_OPTIONS = [
-  { name: "Grand Ballroom", type: "BALLROOM", capacity: "500 guests" },
-  { name: "Emerald Lawn", type: "LAWN", capacity: "800 guests" },
-  { name: "Imperial Banquet Hall", type: "BANQUET", capacity: "200 guests" },
-  { name: "Marble Foyer", type: "FOYER", capacity: "150 guests" },
-  { name: "Sky Terrace", type: "ROOFTOP", capacity: "300 guests" },
-  { name: "Courtyard Garden", type: "COURTYARD", capacity: "100 guests" },
+  {
+    name: "Grand Ballroom",
+    type: "BALLROOM",
+    capacity: "500 guests",
+    thumbnail: "https://images.unsplash.com/photo-1579254216656-3c0c16a3bdd6?w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.unsplash.com/photo-1579254216656-3c0c16a3bdd6?w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.unsplash.com/photo-1579254216547-a90bea451479?w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1670529776286-f426fb7ba42c?w=600&h=400&fit=crop" },
+      { label: "Stage View", image: "https://images.pexels.com/photos/30584407/pexels-photo-30584407.jpeg?auto=compress&w=600&h=400&fit=crop" },
+    ],
+  },
+  {
+    name: "Emerald Lawn",
+    type: "LAWN",
+    capacity: "800 guests",
+    thumbnail: "https://images.unsplash.com/photo-1771276046005-9de355046e70?w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.unsplash.com/photo-1771276046005-9de355046e70?w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.unsplash.com/photo-1762926628099-a27b380d94c9?w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1762926627939-a66e4fc17c2a?w=600&h=400&fit=crop" },
+      { label: "Aerial View", image: "https://images.unsplash.com/photo-1771992457691-27aad49f8869?w=600&h=400&fit=crop" },
+    ],
+  },
+  {
+    name: "Imperial Banquet Hall",
+    type: "BANQUET",
+    capacity: "200 guests",
+    thumbnail: "https://images.pexels.com/photos/19569865/pexels-photo-19569865.jpeg?auto=compress&w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.pexels.com/photos/19569865/pexels-photo-19569865.jpeg?auto=compress&w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.unsplash.com/photo-1569069246867-979d76c7864d?w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1670529776286-f426fb7ba42c?w=600&h=400&fit=crop" },
+      { label: "Stage View", image: "https://images.unsplash.com/photo-1579254216656-3c0c16a3bdd6?w=600&h=400&fit=crop" },
+    ],
+  },
+  {
+    name: "Marble Foyer",
+    type: "FOYER",
+    capacity: "150 guests",
+    thumbnail: "https://images.unsplash.com/photo-1569069246867-979d76c7864d?w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.unsplash.com/photo-1569069246867-979d76c7864d?w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.pexels.com/photos/19569865/pexels-photo-19569865.jpeg?auto=compress&w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1579254216547-a90bea451479?w=600&h=400&fit=crop" },
+      { label: "Entrance View", image: "https://images.unsplash.com/photo-1670529776286-f426fb7ba42c?w=600&h=400&fit=crop" },
+    ],
+  },
+  {
+    name: "Sky Terrace",
+    type: "ROOFTOP",
+    capacity: "300 guests",
+    thumbnail: "https://images.unsplash.com/photo-1771992457691-27aad49f8869?w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.unsplash.com/photo-1771992457691-27aad49f8869?w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.unsplash.com/photo-1771276046005-9de355046e70?w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1762926628099-a27b380d94c9?w=600&h=400&fit=crop" },
+      { label: "Panoramic View", image: "https://images.unsplash.com/photo-1762926627939-a66e4fc17c2a?w=600&h=400&fit=crop" },
+    ],
+  },
+  {
+    name: "Courtyard Garden",
+    type: "COURTYARD",
+    capacity: "100 guests",
+    thumbnail: "https://images.unsplash.com/photo-1762926627939-a66e4fc17c2a?w=300&h=200&fit=crop",
+    angles: [
+      { label: "Front View", image: "https://images.unsplash.com/photo-1762926627939-a66e4fc17c2a?w=600&h=400&fit=crop" },
+      { label: "Left View", image: "https://images.unsplash.com/photo-1762926628099-a27b380d94c9?w=600&h=400&fit=crop" },
+      { label: "Right View", image: "https://images.unsplash.com/photo-1771276046005-9de355046e70?w=600&h=400&fit=crop" },
+      { label: "Garden View", image: "https://images.unsplash.com/photo-1771992457691-27aad49f8869?w=600&h=400&fit=crop" },
+    ],
+  },
 ];
 
 const EVENT_OPTIONS = [
-  { name: "Ultra-Luxury Wedding", desc: "Opulent destination wedding with international luxury standards" },
-  { name: "Indian Destination Wedding", desc: "Grand Indian wedding with traditional elements and modern luxury" },
-  { name: "Corporate Conference", desc: "Professional business event with modern staging and technology" },
-  { name: "Global Exhibition", desc: "International trade show or product showcase" },
-  { name: "Fashion Show", desc: "High-fashion runway event with dramatic staging" },
-  { name: "Product Launch", desc: "Premium brand product unveiling event" },
-  { name: "Cultural Festival", desc: "Vibrant cultural celebration with diverse elements" },
+  { name: "Ultra-Luxury Wedding", desc: "Opulent destination wedding with international luxury standards", thumbnail: "https://images.unsplash.com/photo-1579254216656-3c0c16a3bdd6?w=300&h=200&fit=crop" },
+  { name: "Indian Destination Wedding", desc: "Grand Indian wedding with traditional elements and modern luxury", thumbnail: "https://images.unsplash.com/photo-1579254216547-a90bea451479?w=300&h=200&fit=crop" },
+  { name: "Corporate Conference", desc: "Professional business event with modern staging and technology", thumbnail: "https://images.unsplash.com/photo-1569069246867-979d76c7864d?w=300&h=200&fit=crop" },
+  { name: "Global Exhibition", desc: "International trade show or product showcase", thumbnail: "https://images.unsplash.com/photo-1670529776286-f426fb7ba42c?w=300&h=200&fit=crop" },
+  { name: "Fashion Show", desc: "High-fashion runway event with dramatic staging", thumbnail: "https://images.pexels.com/photos/30584407/pexels-photo-30584407.jpeg?auto=compress&w=300&h=200&fit=crop" },
+  { name: "Product Launch", desc: "Premium brand product unveiling event", thumbnail: "https://images.pexels.com/photos/19569865/pexels-photo-19569865.jpeg?auto=compress&w=300&h=200&fit=crop" },
+  { name: "Cultural Festival", desc: "Vibrant cultural celebration with diverse elements", thumbnail: "https://images.unsplash.com/photo-1771276046005-9de355046e70?w=300&h=200&fit=crop" },
 ];
 
-export default function Sidebar({ filters, setFilters, referenceImage, setReferenceImage }) {
+export { SPACE_OPTIONS, EVENT_OPTIONS };
+
+export default function Sidebar({
+  filters,
+  setFilters,
+  referenceImage,
+  setReferenceImage,
+  onSpaceClick,
+  onHoverItem,
+}) {
   const fileInputRef = useRef(null);
   const [dragOver, setDragOver] = useState(false);
 
@@ -41,16 +117,19 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
     handleFileSelect(file);
   };
 
-  const toggleFilter = (category, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [category]: prev[category] === value ? null : value,
-    }));
+  const handleMouseMove = (e, item) => {
+    const sidebar = e.currentTarget.closest("[data-testid='studio-sidebar']");
+    const sidebarRect = sidebar.getBoundingClientRect();
+    onHoverItem({
+      ...item,
+      x: sidebarRect.right + 12,
+      y: Math.min(e.clientY - 60, window.innerHeight - 200),
+    });
   };
 
   return (
     <div
-      className="glass-panel rounded-2xl h-full flex flex-col p-5 overflow-y-auto glass-scroll"
+      className="glass-panel rounded-2xl h-full flex flex-col p-5 overflow-y-auto glass-scroll relative"
       data-testid="studio-sidebar"
     >
       {/* Upload Design Reference */}
@@ -119,7 +198,7 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
       {/* Separator */}
       <div className="border-t border-white/10 mb-5" />
 
-      {/* Select Space */}
+      {/* Select Space — click opens angle modal */}
       <div className="mb-5">
         <h3
           className="text-white/90 text-sm mb-1"
@@ -128,13 +207,15 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
           Select Space
         </h3>
         <p className="text-white/40 text-xs mb-3" style={{ fontFamily: "var(--font-body)" }}>
-          Choose a Fairmont Mumbai venue
+          Click to explore angles
         </p>
         <div className="flex flex-col gap-2">
           {SPACE_OPTIONS.map((space) => (
             <button
               key={space.name}
-              onClick={() => toggleFilter("space", space.name)}
+              onClick={() => onSpaceClick(space)}
+              onMouseMove={(e) => handleMouseMove(e, { thumbnail: space.thumbnail, name: space.name })}
+              onMouseLeave={() => onHoverItem(null)}
               className={`text-left rounded-xl px-4 py-3 transition-all duration-300 ${
                 filters.space === space.name
                   ? "glass-pill-active border-white/40"
@@ -154,7 +235,7 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
       {/* Separator */}
       <div className="border-t border-white/10 mb-5" />
 
-      {/* Event Type */}
+      {/* Event Type — toggle filter */}
       <div className="mb-5">
         <h3
           className="text-white/90 text-sm mb-1"
@@ -169,7 +250,14 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
           {EVENT_OPTIONS.map((event) => (
             <button
               key={event.name}
-              onClick={() => toggleFilter("function_type", event.name)}
+              onClick={() =>
+                setFilters((prev) => ({
+                  ...prev,
+                  function_type: prev.function_type === event.name ? null : event.name,
+                }))
+              }
+              onMouseMove={(e) => handleMouseMove(e, { thumbnail: event.thumbnail, name: event.name })}
+              onMouseLeave={() => onHoverItem(null)}
               className={`text-left rounded-xl px-4 py-3 transition-all duration-300 ${
                 filters.function_type === event.name
                   ? "glass-pill-active border-white/40"
@@ -185,10 +273,8 @@ export default function Sidebar({ filters, setFilters, referenceImage, setRefere
         </div>
       </div>
 
-      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Tiny reference preview if image set */}
       {referenceImage && (
         <div className="mt-4 flex items-center gap-2 text-white/40 text-xs">
           <ImageIcon className="w-3.5 h-3.5" strokeWidth={1.5} />

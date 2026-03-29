@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, FileText } from "lucide-react";
 import Sidebar from "@/components/studio/Sidebar";
 import Canvas from "@/components/studio/Canvas";
+import AngleModal from "@/components/studio/AngleModal";
 
 const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/prqxmpyt_b354_ho_00_p_1024x768.jpg";
 
@@ -14,6 +15,19 @@ export default function StudioPage() {
   });
   const [referenceImage, setReferenceImage] = useState(null);
   const [sessionId] = useState(() => crypto.randomUUID());
+  const [angleModalSpace, setAngleModalSpace] = useState(null);
+  const [selectedAngle, setSelectedAngle] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const handleSpaceClick = useCallback((space) => {
+    setAngleModalSpace(space);
+  }, []);
+
+  const handleAngleSelect = useCallback((space, angle) => {
+    setFilters((prev) => ({ ...prev, space: space.name }));
+    setSelectedAngle({ space: space.name, angle: angle.label, image: angle.image });
+    setAngleModalSpace(null);
+  }, []);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden text-white" data-testid="studio-page">
@@ -29,15 +43,25 @@ export default function StudioPage() {
         <div
           className="absolute inset-0"
           style={{
-            backdropFilter: "blur(60px)",
-            WebkitBackdropFilter: "blur(60px)",
-            backgroundColor: "rgba(0, 0, 0, 0.55)",
+            backdropFilter: "blur(24px) saturate(1.2)",
+            WebkitBackdropFilter: "blur(24px) saturate(1.2)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
           }}
         />
       </div>
 
-      {/* Top Bar */}
-      <div className="relative z-20 flex items-center justify-between px-4 md:px-6 py-3">
+      {/* Top Bar — glassmorphic nav */}
+      <div
+        className="relative z-20 flex items-center justify-between px-4 md:px-6 py-3 mx-4 md:mx-6 mt-3 rounded-2xl"
+        style={{
+          backdropFilter: "blur(20px) saturate(1.3)",
+          WebkitBackdropFilter: "blur(20px) saturate(1.3)",
+          background: "rgba(255, 255, 255, 0.06)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+        }}
+        data-testid="studio-topbar"
+      >
         <button
           onClick={() => navigate("/")}
           className="glass-button rounded-full px-4 py-2 flex items-center gap-2 text-sm"
@@ -75,6 +99,8 @@ export default function StudioPage() {
             setFilters={setFilters}
             referenceImage={referenceImage}
             setReferenceImage={setReferenceImage}
+            onSpaceClick={handleSpaceClick}
+            onHoverItem={setHoveredItem}
           />
         </div>
 
@@ -84,9 +110,54 @@ export default function StudioPage() {
             filters={filters}
             referenceImage={referenceImage}
             sessionId={sessionId}
+            selectedAngle={selectedAngle}
           />
         </div>
       </div>
+
+      {/* Angle Selection Modal */}
+      {angleModalSpace && (
+        <AngleModal
+          space={angleModalSpace}
+          onSelect={handleAngleSelect}
+          onClose={() => setAngleModalSpace(null)}
+        />
+      )}
+
+      {/* Hover Thumbnail Tooltip — rendered at root level to avoid backdrop-filter containment */}
+      {hoveredItem && (
+        <div
+          className="fixed z-[100] pointer-events-none"
+          style={{ left: hoveredItem.x, top: hoveredItem.y }}
+          data-testid="hover-thumbnail"
+        >
+          <div
+            className="rounded-xl overflow-hidden"
+            style={{
+              width: 220,
+              backdropFilter: "blur(24px) saturate(1.4)",
+              WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+              background: "rgba(0, 0, 0, 0.3)",
+              border: "1px solid rgba(255, 255, 255, 0.12)",
+              boxShadow: "0 16px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+            }}
+          >
+            <img
+              src={hoveredItem.thumbnail}
+              alt={hoveredItem.name}
+              className="w-full h-32 object-cover"
+            />
+            <div className="px-3 py-2.5" style={{ borderTop: "1px solid rgba(255, 255, 255, 0.06)" }}>
+              <p
+                className="text-white text-xs font-medium truncate"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                {hoveredItem.name}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

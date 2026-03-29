@@ -4,7 +4,7 @@ import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-export default function Canvas({ filters, referenceImage, sessionId }) {
+export default function Canvas({ filters, referenceImage, sessionId, selectedAngle }) {
   const [prompt, setPrompt] = useState("");
   const [generatedImage, setGeneratedImage] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -17,8 +17,14 @@ export default function Canvas({ filters, referenceImage, sessionId }) {
     setGeneratedImage(null);
 
     try {
+      // Build angle context into the prompt
+      let fullPrompt = prompt.trim();
+      if (selectedAngle) {
+        fullPrompt += `. Perspective: ${selectedAngle.angle} of ${selectedAngle.space}`;
+      }
+
       const payload = {
-        prompt: prompt.trim(),
+        prompt: fullPrompt,
         function_type: filters.function_type || null,
         space: filters.space || null,
         reference_image: referenceImage?.data || null,
@@ -86,7 +92,7 @@ export default function Canvas({ filters, referenceImage, sessionId }) {
       </div>
 
       {/* Active filters display */}
-      {(filters.function_type || filters.space) && (
+      {(filters.function_type || filters.space || selectedAngle) && (
         <div className="flex items-center gap-2 flex-wrap px-1">
           <span className="text-white/40 text-xs" style={{ fontFamily: "var(--font-body)" }}>
             Active:
@@ -96,6 +102,9 @@ export default function Canvas({ filters, referenceImage, sessionId }) {
           )}
           {filters.space && (
             <span className="glass-pill-active rounded-full px-3 py-1 text-xs">{filters.space}</span>
+          )}
+          {selectedAngle && (
+            <span className="glass-pill-active rounded-full px-3 py-1 text-xs">{selectedAngle.angle}</span>
           )}
           {referenceImage && (
             <span className="glass-pill-active rounded-full px-3 py-1 text-xs flex items-center gap-1">
