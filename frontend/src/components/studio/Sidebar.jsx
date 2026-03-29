@@ -131,6 +131,7 @@ export default function Sidebar({
     <div
       className="glass-panel rounded-2xl h-full flex flex-col p-5 overflow-y-auto glass-scroll relative"
       data-testid="studio-sidebar"
+      onMouseLeave={() => onHoverItem(null)}
     >
       {/* Upload Design Reference */}
       <div className="mb-6">
