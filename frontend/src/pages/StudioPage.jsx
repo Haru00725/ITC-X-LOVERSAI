@@ -4,6 +4,7 @@ import { ArrowLeft, FileText } from "lucide-react";
 import Sidebar from "@/components/studio/Sidebar";
 import Canvas from "@/components/studio/Canvas";
 import AngleModal from "@/components/studio/AngleModal";
+import TemplateRefModal from "@/components/studio/TemplateRefModal";
 
 const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/prqxmpyt_b354_ho_00_p_1024x768.jpg";
 
@@ -18,6 +19,7 @@ export default function StudioPage() {
   const [angleModalSpace, setAngleModalSpace] = useState(null);
   const [selectedAngle, setSelectedAngle] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [showTemplateRef, setShowTemplateRef] = useState(false);
 
   const handleSpaceClick = useCallback((space) => {
     setAngleModalSpace(space);
@@ -27,6 +29,16 @@ export default function StudioPage() {
     setFilters((prev) => ({ ...prev, space: space.name }));
     setSelectedAngle({ space: space.name, angle: angle.label, image: angle.image });
     setAngleModalSpace(null);
+  }, []);
+
+  const handleTemplateRefSelect = useCallback((template) => {
+    setReferenceImage({
+      data: null,
+      preview: null,
+      name: `Template: ${template.title}`,
+      templateId: template.id,
+    });
+    setShowTemplateRef(false);
   }, []);
 
   return (
@@ -101,6 +113,7 @@ export default function StudioPage() {
             setReferenceImage={setReferenceImage}
             onSpaceClick={handleSpaceClick}
             onHoverItem={setHoveredItem}
+            onOpenTemplateRef={() => setShowTemplateRef(true)}
           />
         </div>
 
@@ -121,6 +134,14 @@ export default function StudioPage() {
           space={angleModalSpace}
           onSelect={handleAngleSelect}
           onClose={() => setAngleModalSpace(null)}
+        />
+      )}
+
+      {/* Template Reference Modal */}
+      {showTemplateRef && (
+        <TemplateRefModal
+          onSelect={handleTemplateRefSelect}
+          onClose={() => setShowTemplateRef(false)}
         />
       )}
 
