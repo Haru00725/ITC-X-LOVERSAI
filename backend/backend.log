@@ -1,0 +1,33 @@
+INFO:     Will watch for changes in these directories: ['/Users/abhirawat/Desktop/Fairmount /Fairmount-x-Loversai/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [54685] using WatchFiles
+2026-04-01 15:37:23,543 - server - INFO - MongoDB connected successfully
+INFO:     Started server process [54699]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2026-04-01 15:38:16,242 - server - INFO - Generating with prompt: test wedding stage. Event type: Ultra-Luxury Wedding. Venue space: Grand Terminus 1 at Fairmont Mumb...
+2026-04-01 15:38:16,242 - server - INFO - === API RECEIVED ===
+2026-04-01 15:38:16,242 - server - INFO - prompt: test wedding stage. Event type: Ultra-Luxury Weddi...
+2026-04-01 15:38:16,242 - server - INFO - function_type: Ultra-Luxury Wedding
+2026-04-01 15:38:16,242 - server - INFO - space: Grand Terminus 1
+2026-04-01 15:38:16,242 - server - INFO - venue_image provided: True, length: 96
+2026-04-01 15:38:16,242 - server - INFO - design_image provided: True, length: 96
+2026-04-01 15:38:16,242 - server - INFO - reference_image provided: False, length: 0
+2026-04-01 15:38:16,242 - server - INFO - Using dual image-to-image mode (venue + design)
+2026-04-01 15:38:18,036 - httpx - INFO - HTTP Request: POST https://api.bfl.ai/v1/flux-kontext-pro "HTTP/1.1 200 OK"
+2026-04-01 15:38:18,037 - server - INFO - FLUX API status: 200
+2026-04-01 15:38:18,037 - server - INFO - Task ID: f57f2d7e-6e6e-4871-9451-d886abcc8a6b, Polling for result...
+2026-04-01 15:38:22,133 - httpx - INFO - HTTP Request: GET https://api.us2.bfl.ai/v1/get_result?id=f57f2d7e-6e6e-4871-9451-d886abcc8a6b "HTTP/1.1 200 OK"
+2026-04-01 15:38:22,134 - server - INFO - Poll 1: status = Pending
+2026-04-01 15:38:25,510 - httpx - INFO - HTTP Request: GET https://api.us2.bfl.ai/v1/get_result?id=f57f2d7e-6e6e-4871-9451-d886abcc8a6b "HTTP/1.1 200 OK"
+2026-04-01 15:38:25,510 - server - INFO - Poll 2: status = Pending
+2026-04-01 15:38:28,889 - httpx - INFO - HTTP Request: GET https://api.us2.bfl.ai/v1/get_result?id=f57f2d7e-6e6e-4871-9451-d886abcc8a6b "HTTP/1.1 200 OK"
+2026-04-01 15:38:28,889 - server - INFO - Poll 3: status = Ready
+2026-04-01 15:38:28,890 - server - INFO - Result ready after 9s
+2026-04-01 15:38:30,221 - httpx - INFO - HTTP Request: GET https://delivery.us2.bfl.ai/results/e7/1050276354f650/6354f65035444fbf81bb9629d7fdcf0a/sample.png?se=2026-04-01T10%3A18%3A25Z&sp=r&sv=2024-11-04&sr=b&rsct=image/png&sig=ULbgL7E371Mc7GOfkCIPmXlvwNq04P2nsaCe1TUZFfQ%3D "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54580 - "POST /api/generate HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [54699]
+INFO:     Stopping reloader process [54685]

@@ -1,10 +1,11 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft, FileText, LayoutGrid } from "lucide-react";
 import Sidebar from "@/components/studio/Sidebar";
 import Canvas from "@/components/studio/Canvas";
 import AngleModal from "@/components/studio/AngleModal";
 import TemplateRefModal from "@/components/studio/TemplateRefModal";
+import MoodboardModal from "@/components/studio/MoodboardModal";
 
 const BG_IMAGE = "https://customer-assets.emergentagent.com/job_luxe-design-studio-2/artifacts/prqxmpyt_b354_ho_00_p_1024x768.jpg";
 
@@ -20,6 +21,8 @@ export default function StudioPage() {
   const [selectedAngle, setSelectedAngle] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showTemplateRef, setShowTemplateRef] = useState(false);
+  const [moodboardImages, setMoodboardImages] = useState([]);
+  const [showMoodboard, setShowMoodboard] = useState(false);
 
   const handleSpaceClick = useCallback((space) => {
     setAngleModalSpace(space);
@@ -33,12 +36,30 @@ export default function StudioPage() {
 
   const handleTemplateRefSelect = useCallback((template) => {
     setReferenceImage({
-      data: null,
-      preview: null,
+      data: template.thumbnail ? null : null,
+      preview: template.thumbnail || null,
       name: `Template: ${template.title}`,
       templateId: template.id,
+      thumbnailUrl: template.thumbnail || null,
     });
     setShowTemplateRef(false);
+  }, []);
+
+  const handleAddToMoodboard = useCallback((imageData, prompt) => {
+    setMoodboardImages((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        image_data: imageData,
+        prompt: prompt,
+        filters: { function_type: filters.function_type, space: filters.space },
+        created_at: new Date().toISOString(),
+      },
+    ]);
+  }, [filters]);
+
+  const handleRemoveFromMoodboard = useCallback((id) => {
+    setMoodboardImages((prev) => prev.filter((img) => img.id !== id));
   }, []);
 
   return (
@@ -100,6 +121,21 @@ export default function StudioPage() {
           <FileText className="w-4 h-4" strokeWidth={1.5} />
           <span className="hidden sm:inline">Templates</span>
         </button>
+
+        <button
+          onClick={() => setShowMoodboard(true)}
+          className="glass-button rounded-full px-4 py-2 flex items-center gap-2 text-sm relative"
+          style={{ fontFamily: "var(--font-body)", fontWeight: 400 }}
+          data-testid="open-moodboard"
+        >
+          <LayoutGrid className="w-4 h-4" strokeWidth={1.5} />
+          <span className="hidden sm:inline">Moodboard</span>
+          {moodboardImages.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-white/20 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center">
+              {moodboardImages.length}
+            </span>
+          )}
+        </button>
       </div>
 
       {/* Main Layout */}
@@ -122,8 +158,11 @@ export default function StudioPage() {
           <Canvas
             filters={filters}
             referenceImage={referenceImage}
+            venueImage={selectedAngle?.image || null}
             sessionId={sessionId}
             selectedAngle={selectedAngle}
+            onAddToMoodboard={handleAddToMoodboard}
+            moodboardCount={moodboardImages.length}
           />
         </div>
       </div>
@@ -178,6 +217,15 @@ export default function StudioPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Moodboard Modal */}
+      {showMoodboard && (
+        <MoodboardModal
+          images={moodboardImages}
+          onRemove={handleRemoveFromMoodboard}
+          onClose={() => setShowMoodboard(false)}
+        />
       )}
     </div>
   );
