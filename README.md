@@ -1,4 +1,4 @@
-# Fairmont x LoversAI - Complete Project Memory
+# ITC x LoversAI - Complete Project Memory
 
 > **Last Updated**: April 2026  
 > **Purpose**: Comprehensive reference for understanding the project requirements, user flow, data processing, and current implementation state.
@@ -8,9 +8,9 @@
 ## 1. Project Overview
 
 ### Core Identity
-- **Name**: Fairmont x LoversAI
+- **Name**: ITC x LoversAI
 - **Type**: Ultra-Luxury Wedding & Event Design Platform
-- **Partnership**: Fairmont Mumbai × LoversAI
+- **Partnership**: ITC Aurangabad × LoversAI
 - **Theme**: Dark, Cinematic, Mood-driven
 - **Design Philosophy**: STRICT GLASSMORPHISM ONLY (no solid flat colors)
 
