@@ -122,9 +122,19 @@ export default function Canvas({ filters, referenceImage, venueImage, sessionId,
       console.log("venue_image:", venueImageBase64 ? `✅ ${venueImageBase64.length} chars` : "❌ NOT SENT");
       console.log("design_image:", designImageBase64 ? `✅ ${designImageBase64.length} chars` : "❌ NOT SENT");
       
-      // Validate before sending
-      if (!venueImageBase64 && !designImageBase64) {
-        setError("No images available. Please select a venue or upload a design reference.");
+      // Validate before sending: enforce dual-image workflow (venue + design)
+      const hasVenueInput = !!venueImageBase64 || !!venueImage;
+      const designImageUrl = referenceImage?.thumbnailUrl || referenceImage?.preview || null;
+      const hasDesignInput = !!designImageBase64 || !!designImageUrl;
+
+      if (!hasVenueInput) {
+        setError("Venue image missing. Please select a space and angle first.");
+        setIsGenerating(false);
+        return;
+      }
+
+      if (!hasDesignInput) {
+        setError("Design reference missing. Please upload/select a reference image.");
         setIsGenerating(false);
         return;
       }
@@ -135,6 +145,8 @@ export default function Canvas({ filters, referenceImage, venueImage, sessionId,
         space: filters.space || null,
         venue_image: venueImageBase64,
         design_image: designImageBase64,
+        venue_image_url: venueImage || null,
+        design_image_url: designImageUrl,
         reference_image: referenceImage?.data || null,
       };
 

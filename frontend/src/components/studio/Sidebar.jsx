@@ -66,13 +66,13 @@ const SPACE_OPTIONS = [
 ];
 
 const EVENT_OPTIONS = [
-  { name: "Ultra-Luxury Wedding", desc: "Opulent destination wedding with international luxury standards", thumbnail: `${ASSET}/ptw2bect_venue.jpeg` },
-  { name: "Indian Destination Wedding", desc: "Grand Indian wedding with traditional elements and modern luxury", thumbnail: `${ASSET}/6rfb89f4_b354_ho_01_p_1024x768.jpg` },
-  { name: "Corporate Conference", desc: "Professional business event with modern staging and technology", thumbnail: `${ASSET}/j2xc080s_gemini-2.5-flash-image_create_the_bottom_view_of_the_venue_and_the_observer_is_on_the_top_seeing_the_bo-0.jpg` },
-  { name: "Global Exhibition", desc: "International trade show or product showcase", thumbnail: `${ASSET}/8q4dtu28_a_create_the_top_view_.png` },
-  { name: "Fashion Show", desc: "High-fashion runway event with dramatic staging", thumbnail: `${ASSET}/f1puz5nl_Gemini_Generated_Image_f1jis2f1jis2f1ji.png` },
-  { name: "Product Launch", desc: "Premium brand product unveiling event", thumbnail: `${ASSET}/wplzju3p_WhatsApp%20Image%202026-03-24%20at%2015.01.42.jpeg` },
-  { name: "Cultural Festival", desc: "Vibrant cultural celebration with diverse elements", thumbnail: `${ASSET}/6rfb89f4_b354_ho_01_p_1024x768.jpg` },
+  { name: "Ultra-Luxury Wedding", desc: "Opulent destination wedding with international luxury standards", thumbnail: "/Assets/Ultra-Luxury.jpg" },
+  { name: "Indian Destination Wedding", desc: "Grand Indian wedding with traditional elements and modern luxury", thumbnail: "/Assets/Destination-wedding.jpg" },
+  { name: "Corporate Conference", desc: "Professional business event with modern staging and technology", thumbnail: "/Assets/Corparate.jpg" },
+  { name: "Global Exhibition", desc: "International trade show or product showcase", thumbnail: "/Assets/Gloabal-Exhibiton.jpg" },
+  { name: "Fashion Show", desc: "High-fashion runway event with dramatic staging", thumbnail: "/Assets/Fashion-Show.jpg" },
+  { name: "Product Launch", desc: "Premium brand product unveiling event", thumbnail: "/Assets/Product-Launch.jpg" },
+  { name: "Cultural Festival", desc: "Vibrant cultural celebration with diverse elements", thumbnail: "/Assets/Cultural-Festival.jpg" },
 ];
 
 export { SPACE_OPTIONS, EVENT_OPTIONS };
